@@ -70,7 +70,7 @@ describe('FFI integration test for the HTTP Consumer API', () => {
       port = pact.createMockServer(HOST);
     });
 
-    it.only('generates a pact with success', () =>
+    it('generates a pact with success', () =>
       axios
         .request({
           baseURL: `http://${HOST}:${port}`,
