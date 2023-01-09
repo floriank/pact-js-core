@@ -20,7 +20,8 @@ const { expect } = chai;
 
 const HOST = '127.0.0.1';
 
-const useContentTypeOctetStream = process.platform === 'win32' || process.platform === 'darwin';
+const useContentTypeOctetStream =
+  process.platform === 'win32' || process.platform === 'darwin';
 
 describe('FFI integration test for the HTTP Consumer API', () => {
   setLogLevel('trace');
@@ -39,8 +40,8 @@ describe('FFI integration test for the HTTP Consumer API', () => {
         'foo-consumer',
         'bar-provider',
         FfiSpecificationVersion['SPECIFICATION_VERSION_V3'],
-        "trace",
-        "log/pact.log",
+        'trace',
+        'log/pact.log'
       );
 
       const interaction = pact.newInteraction('some description');
@@ -190,7 +191,9 @@ describe('FFI integration test for the HTTP Consumer API', () => {
       interaction.withQuery('someParam', 0, 'someValue');
       interaction.withRequestBinaryBody(
         bytes,
-        useContentTypeOctetStream ? 'application/octet-stream' : 'application/gzip'
+        useContentTypeOctetStream
+          ? 'application/octet-stream'
+          : 'application/gzip'
       );
       interaction.withResponseBody(
         JSON.stringify({

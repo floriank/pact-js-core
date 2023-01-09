@@ -20,7 +20,7 @@ describe('Verifier Integration Spec', () => {
   const DEFAULT_ARGS = {
     logLevel: 'debug' as LogLevel,
     providerVersion: 'VERSION',
-    logFile: 'log/pact.log'
+    logFile: 'log/pact.log',
   };
 
   before(() =>
