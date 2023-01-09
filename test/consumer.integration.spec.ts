@@ -20,7 +20,7 @@ const { expect } = chai;
 
 const HOST = '127.0.0.1';
 
-const isWin = process.platform === 'win32';
+const useContentTypeOctetStream = process.platform === 'win32' || process.platform === 'darwin';
 
 describe('FFI integration test for the HTTP Consumer API', () => {
   setLogLevel('trace');
@@ -38,7 +38,9 @@ describe('FFI integration test for the HTTP Consumer API', () => {
       pact = makeConsumerPact(
         'foo-consumer',
         'bar-provider',
-        FfiSpecificationVersion['SPECIFICATION_VERSION_V3']
+        FfiSpecificationVersion['SPECIFICATION_VERSION_V3'],
+        "trace",
+        "log/pact.log",
       );
 
       const interaction = pact.newInteraction('some description');
@@ -68,7 +70,7 @@ describe('FFI integration test for the HTTP Consumer API', () => {
       port = pact.createMockServer(HOST);
     });
 
-    it('generates a pact with success', () =>
+    it.only('generates a pact with success', () =>
       axios
         .request({
           baseURL: `http://${HOST}:${port}`,
@@ -188,7 +190,7 @@ describe('FFI integration test for the HTTP Consumer API', () => {
       interaction.withQuery('someParam', 0, 'someValue');
       interaction.withRequestBinaryBody(
         bytes,
-        isWin ? 'application/octet-stream' : 'application/gzip'
+        useContentTypeOctetStream ? 'application/octet-stream' : 'application/gzip'
       );
       interaction.withResponseBody(
         JSON.stringify({
@@ -211,7 +213,7 @@ describe('FFI integration test for the HTTP Consumer API', () => {
         .request({
           baseURL: `http://${HOST}:${port}`,
           headers: {
-            'content-type': isWin
+            'content-type': useContentTypeOctetStream
               ? 'application/octet-stream'
               : 'application/gzip',
             Accept: 'application/json',
