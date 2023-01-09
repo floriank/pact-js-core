@@ -21,7 +21,8 @@ const { expect } = chai;
 const HOST = '127.0.0.1';
 
 const useContentTypeOctetStream =
-  process.platform === 'win32' || process.platform === 'darwin';
+  process.platform === 'win32' ||
+  (process.platform === 'darwin' && process.arch === 'arm64');
 
 describe('FFI integration test for the HTTP Consumer API', () => {
   setLogLevel('trace');
